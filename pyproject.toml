@@ -1,0 +1,80 @@
+[project]
+name = "cs336"
+version = "0.1.0"
+description = "CS336 all assignments (merged dev environment)"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    # assignment1-basics
+    "einops>=0.8.1",
+    "einx>=0.3.0",
+    "jaxtyping>=0.3.0",
+    "numpy",
+    "psutil>=6.1.1",
+    "pytest>=8.3.4",
+    "regex>=2024.11.6",
+    "submitit>=1.5.2",
+    "tiktoken>=0.9.0",
+    "tqdm>=4.67.1",
+    "wandb>=0.19.7",
+    # assignment2-systems
+    "humanfriendly",
+    "matplotlib",
+    "pandas>=2",
+    # assignment3-scaling
+    "requests>=2.32.3",
+    "scipy",
+    # assignment4-data
+    "xopen>=2.0.2",
+    "resiliparse>=0.15.2",
+    "fasttext>=0.9.3",
+    "mmh3>=5.1.0",
+    "nltk>=3.9.1",
+    "fastwarc>=0.15.2",
+    "tldextract>=5.3.0",
+    # assignment4-data nested cs336-basics extras
+    "transformers>=4.51.3",
+    "typer>=0.15.3",
+    # assignment5-alignment
+    "accelerate>=1.5.2",
+    "alpaca-eval",
+    "flash-attn==2.7.4.post1",
+    "jupyter>=1.1.1",
+    "math-verify[antlr4-13-2]>=0.7.0",
+    "pylatexenc==2.10",
+    "notebook>=7.4.2",
+    "vllm==0.7.2",
+]
+
+[tool.uv.sources]
+cs336-basics = { path = "./assignment1-basics", editable = true }
+alpaca-eval = { git = "https://github.com/nelson-liu/alpaca_eval.git", rev = "forward_kwargs_to_vllm" }
+
+[tool.uv]
+package = true
+no-build-isolation-package = ["flash-attn"]
+
+[[tool.uv.dependency-metadata]]
+name = "flash-attn"
+version = "2.7.4.post1"
+requires-dist = ["torch", "einops", "setuptools"]
+
+[tool.setuptools.packages.find]
+include = ["cs336_basics", "cs336_systems", "cs336_scaling", "cs336_data", "cs336_alignment"]
+
+[tool.pytest.ini_options]
+log_cli = true
+log_cli_level = "WARNING"
+addopts = "-s"
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint.extend-per-file-ignores]
+"__init__.py" = ["E402", "F401", "F403", "E501"]
+
+[tool.ruff.lint]
+extend-select = ["UP"]
+ignore = [
+    "F722"
+]
